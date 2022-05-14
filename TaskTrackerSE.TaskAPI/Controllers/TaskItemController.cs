@@ -32,7 +32,7 @@ namespace TaskTrackerSE.TaskAPI.Controllers
         }
 
         /// <summary>
-        /// Retrieve all posts
+        /// Retrieve all taskItems
         /// </summary>
         /// <param name="filters">Filters to apply</param>
         /// <returns></returns>

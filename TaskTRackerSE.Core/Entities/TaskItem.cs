@@ -12,8 +12,8 @@ namespace TaskTrackerSE.Core.Entities
         public DateTime Date { get; set; }
         public bool IsActive { get; set; }
         public string Description { get; set; }
-
         public int EmployeeID { get; set; }
+
         public Employee Employee { get; set; }
     }
 }

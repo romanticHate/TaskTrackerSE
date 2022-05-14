@@ -56,26 +56,6 @@ namespace TaskTrackerSE.Core.Services
             //    throw new BusinessException("User doesn't exist"); // Buisnes exception (example)
             //}
 
-
-            #region Old Code...
-
-
-            //var userPost = await _unitOfWork.TaskItemRepository.GetAllTaskItemByEmployee(taskItem.EmployeeID);
-            //if (userPost.Count() < 10)
-            //{
-            //    var lastPost = userPost.OrderByDescending(x => x.Date).FirstOrDefault();
-            //    if ((DateTime.Now - lastPost.Date).TotalDays < 7)
-            //    {
-            //        throw new BusinessException("You are not able to publish the post");
-            //    }
-            //}
-
-            //if (taskItem.Description.Contains("Sexo"))
-            //{
-            //    throw new BusinessException("Content not allowed");
-            //}
-            #endregion
-
             await _unitOfWork.TaskItemRepository.Add(taskItem);
             await _unitOfWork.SaveChangesAsync();
         }
