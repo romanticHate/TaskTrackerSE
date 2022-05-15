@@ -44,23 +44,12 @@ namespace TaskTrackerSE.Core.Services
                 taskItems = taskItems.Where(x => x.Date.ToShortDateString() == filters.Date.Value.ToShortDateString());
             }
 
-            //if (filters.Description != null)
-            //{
-            //    taskItems = taskItems.Where(x => x.Description.ToLower().Contains(filters.Description.ToLower()));
-            //}
-
             var pagedLst = PagedList<TaskItem>.Create(taskItems, filters.PageNumber, filters.PageSize);
             return pagedLst;
         }
 
         public async Task InsertTaskItem(TaskItem taskItem)
         {
-            //var user = await _unitOfWork.EmployeeRepository.GetById(taskItem.EmployeeID);
-            //if (user == null)
-            //{
-            //    throw new BusinessException("User doesn't exist"); // Buisnes exception (example)
-            //}
-
             await _unitOfWork.TaskItemRepository.Add(taskItem);
             await _unitOfWork.SaveChangesAsync();
         }
