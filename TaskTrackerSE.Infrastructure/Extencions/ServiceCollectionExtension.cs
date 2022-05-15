@@ -40,10 +40,12 @@ namespace TaskTrackerSE.Infrastructure.Extencions
 
         public static IServiceCollection AddServices(this IServiceCollection services)
         {
+            services.AddTransient<IUnitOfWork, UnitOfWork>();
             services.AddTransient<ITaskItemService, TaskItemService>();
             services.AddTransient<ISecurityService, SecurityService>();
+
             services.AddScoped(typeof(IRepository<>), typeof(BaseRepository<>));
-            services.AddTransient<IUnitOfWork, UnitOfWork>();
+            
             services.AddSingleton<IPasswordService, PasswordService>();
             services.AddSingleton<IUriService>(provider =>
             {

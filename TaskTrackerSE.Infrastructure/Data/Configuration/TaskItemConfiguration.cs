@@ -22,13 +22,13 @@ namespace TaskTrackerSE.Infrastructure.Data.Configuration
 
             builder.Property(e => e.Title)
                 .HasColumnName("Titulo")
-                .IsRequired()
+              
                 .HasMaxLength(50)
                 .IsUnicode(false);
 
             builder.Property(e => e.Description)
                 .HasColumnName("Descripcion")
-                .IsRequired()
+               
                 .HasMaxLength(500)
                 .IsUnicode(false);
 

@@ -32,17 +32,22 @@ namespace TaskTrackerSE.Core.Services
             filters.PageNumber = filters.PageNumber == 0 ? _paginationOptions.DefaultPageNumber : filters.PageNumber;
             filters.PageSize = filters.PageSize == 0 ? _paginationOptions.DefaultPageSize : filters.PageSize;
 
-            var taskItems = _unitOfWork.TaskItemRepository.GetAll();           
+            var taskItems = _unitOfWork.TaskItemRepository.GetAll();
+
+            if (filters.Title != null)
+            {
+                taskItems = taskItems.Where(x => x.Title.ToLower().Contains(filters.Title.ToLower()));
+            }
 
             if (filters.Date != null)
             {
                 taskItems = taskItems.Where(x => x.Date.ToShortDateString() == filters.Date.Value.ToShortDateString());
             }
 
-            if (filters.Description != null)
-            {
-                taskItems = taskItems.Where(x => x.Description.ToLower().Contains(filters.Description.ToLower()));
-            }
+            //if (filters.Description != null)
+            //{
+            //    taskItems = taskItems.Where(x => x.Description.ToLower().Contains(filters.Description.ToLower()));
+            //}
 
             var pagedLst = PagedList<TaskItem>.Create(taskItems, filters.PageNumber, filters.PageSize);
             return pagedLst;
