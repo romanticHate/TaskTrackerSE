@@ -78,11 +78,9 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-#region Test Code...
-
 app.UseRouting();
+
 app.UseAuthentication();
-#endregion
 
 app.UseAuthorization();
 

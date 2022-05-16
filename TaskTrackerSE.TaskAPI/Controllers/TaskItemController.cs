@@ -14,7 +14,7 @@ using TaskTrackerSE.TaskAPI.Response;
 
 namespace TaskTrackerSE.TaskAPI.Controllers
 {
-    [Authorize]
+    //[Authorize]
     [Produces("application/json")]
     [Route("api/[controller]")]
     [ApiController]

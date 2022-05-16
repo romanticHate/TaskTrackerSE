@@ -57,8 +57,10 @@ namespace TaskTrackerSE.Core.Services
         public async Task<bool> UpdateTaskItem(TaskItem taskItem)
         {
             var objTaskItem = await _unitOfWork.TaskItemRepository.GetById(taskItem.Id);
-
+            objTaskItem.Title = taskItem.Title;
             objTaskItem.Description = taskItem.Description;
+            objTaskItem.Date = taskItem.Date;
+            objTaskItem.IsActive = taskItem.IsActive;
 
             _unitOfWork.TaskItemRepository.Update(objTaskItem);
             await _unitOfWork.SaveChangesAsync();
