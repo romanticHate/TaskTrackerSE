@@ -39,6 +39,11 @@ namespace TaskTrackerSE.Core.Services
                 taskItems = taskItems.Where(x => x.Title.ToLower().Contains(filters.Title.ToLower()));
             }
 
+            if (filters.IsActive != null)
+            {
+                taskItems = taskItems.Where(x => x.IsActive.Equals(filters.IsActive));
+            }
+
             if (filters.Date != null)
             {
                 taskItems = taskItems.Where(x => x.Date.ToShortDateString() == filters.Date.Value.ToShortDateString());
