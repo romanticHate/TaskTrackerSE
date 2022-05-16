@@ -6,13 +6,11 @@ using System.Threading.Tasks;
 
 namespace TaskTrackerSE.Core.DTOs
 {
-    public class TaskItemDto
+    public class EmployeeDto
     {
-        public string? Title { get; set; }
-        public DateTime Date { get; set; }
+        public string UserName { get; set; }
+        public string Password { get; set; }
+        public string Email { get; set; }
         public bool IsActive { get; set; }
-        public string? Description { get; set; }
-        public int EmployeeID { get; set; }
-
     }
 }

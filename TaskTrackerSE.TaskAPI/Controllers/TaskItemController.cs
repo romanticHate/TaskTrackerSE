@@ -31,11 +31,11 @@ namespace TaskTrackerSE.TaskAPI.Controllers
             _uriService = uriService;
         }
 
-        /// <summary>
-        /// Retrieve all taskItems
-        /// </summary>
-        /// <param name="filters">Filters to apply</param>
-        /// <returns></returns>
+        ///// <summary>
+        ///// Retrieve all taskItems
+        ///// </summary>
+        ///// <param name="filters">Filters to apply</param>
+        ///// <returns></returns>
         [HttpGet(Name = nameof(GetTaskItems))]
         [ProducesResponseType((int)HttpStatusCode.OK, Type = typeof(ApiResponse<IEnumerable<TaskItemDto>>))]
         [ProducesResponseType((int)HttpStatusCode.BadRequest)]
@@ -54,6 +54,42 @@ namespace TaskTrackerSE.TaskAPI.Controllers
                 HasPreviousPage = taskItems.HasPreviousPage,
                 NextPageUrl = _uriService.GetPostPaginationUri(filters, Url.RouteUrl(nameof(GetTaskItems))).ToString(),
                 PreviousPageUrl = _uriService.GetPostPaginationUri(filters, Url.RouteUrl(nameof(GetTaskItems))).ToString()
+            };
+
+            var response = new ApiResponse<IEnumerable<TaskItemDto>>(taskItemsDtos)
+            {
+                Meta = metadata
+            };
+
+            Response.Headers.Add("X-Pagination", JsonConvert.SerializeObject(metadata));
+
+            return Ok(response);
+        }
+
+        /// <summary>
+        /// Retrieve all task-Items by employee
+        /// </summary>
+        /// <param name="filters">Filters to apply</param>
+        /// <returns></returns>
+        [HttpGet("GetTaskItemsByEmployee")]
+        //[ActionName("GetTaskItemsByEmployee")]
+        [ProducesResponseType((int)HttpStatusCode.OK, Type = typeof(ApiResponse<IEnumerable<TaskItemDto>>))]
+        [ProducesResponseType((int)HttpStatusCode.BadRequest)]
+        public async Task<IActionResult> GetTaskItemsByEmployee([FromQuery] TaskItemQueryFilter filters)
+        {
+            var taskItems = await _taskItemService.GetTaskItemsByEmployee(filters);
+            var taskItemsDtos = _mapper.Map<IEnumerable<TaskItemDto>>(taskItems);
+
+            var metadata = new Metadata
+            {
+                TotalCount = taskItems.TotalCount,
+                PageSize = taskItems.PageSize,
+                CurrentPage = taskItems.CurrentPage,
+                TotalPages = taskItems.TotalPages,
+                HasNextPage = taskItems.HasNextPage,
+                HasPreviousPage = taskItems.HasPreviousPage,
+                NextPageUrl = _uriService.GetPostPaginationUri(filters, Url.RouteUrl(nameof(GetTaskItemsByEmployee))).ToString(),
+                PreviousPageUrl = _uriService.GetPostPaginationUri(filters, Url.RouteUrl(nameof(GetTaskItemsByEmployee))).ToString()
             };
 
             var response = new ApiResponse<IEnumerable<TaskItemDto>>(taskItemsDtos)

@@ -12,6 +12,7 @@ namespace TaskTrackerSE.Core.Interfaces
     public interface ITaskItemService
     {
         PagedList<TaskItem> GetTaskItems(TaskItemQueryFilter filters);
+        Task<PagedList<TaskItem>> GetTaskItemsByEmployee(TaskItemQueryFilter filters);
 
         Task<TaskItem> GetTaskItem(int id);
 
@@ -20,5 +21,6 @@ namespace TaskTrackerSE.Core.Interfaces
         Task<bool> UpdateTaskItem(TaskItem post);
 
         Task<bool> DeletTaskItem(int id);
+       
     }
 }

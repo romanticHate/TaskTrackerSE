@@ -27,12 +27,38 @@ namespace TaskTrackerSE.Core.Services
             return await _unitOfWork.TaskItemRepository.GetById(id);
         }
 
+
         public PagedList<TaskItem> GetTaskItems(TaskItemQueryFilter filters)
         {
             filters.PageNumber = filters.PageNumber == 0 ? _paginationOptions.DefaultPageNumber : filters.PageNumber;
             filters.PageSize = filters.PageSize == 0 ? _paginationOptions.DefaultPageSize : filters.PageSize;
 
             var taskItems = _unitOfWork.TaskItemRepository.GetAll();
+
+            if (filters.Title != null)
+            {
+                taskItems = taskItems.Where(x => x.Title.ToLower().Contains(filters.Title.ToLower()));
+            }
+
+            if (filters.IsActive != null)
+            {
+                taskItems = taskItems.Where(x => x.IsActive.Equals(filters.IsActive));
+            }
+
+            if (filters.Date != null)
+            {
+                taskItems = taskItems.Where(x => x.Date.ToShortDateString() == filters.Date.Value.ToShortDateString());
+            }
+
+            var pagedLst = PagedList<TaskItem>.Create(taskItems, filters.PageNumber, filters.PageSize);
+            return pagedLst;
+        }
+        public async Task<PagedList<TaskItem>> GetTaskItemsByEmployee(TaskItemQueryFilter filters)
+        {
+            filters.PageNumber = filters.PageNumber == 0 ? _paginationOptions.DefaultPageNumber : filters.PageNumber;
+            filters.PageSize = filters.PageSize == 0 ? _paginationOptions.DefaultPageSize : filters.PageSize;
+
+            var taskItems = await _unitOfWork.TaskItemRepository.GetAllTaskItemByEmployee(filters.EmployeeId);
 
             if (filters.Title != null)
             {
