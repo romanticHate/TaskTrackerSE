@@ -1,7 +1,7 @@
 using Xunit;
 
 namespace TasktrackerSE.UnitTests
-{
+{   
     public class UnitTest1
     {
         [Fact]
